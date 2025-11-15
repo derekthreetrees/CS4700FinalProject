@@ -72,4 +72,26 @@ public class PlayerMovement : MonoBehaviour
             exhausted = false;
         }
     }
+
+    public void Regen(float amount)
+    {
+        currentStamina += amount;
+        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
+
+        if (staminaSlider != null) staminaSlider.value = currentStamina;
+
+        Debug.Log(gameObject.name + " healed. Health: " + currentStamina);
+    }
+
+    public float GetStamina()
+    {
+        return currentStamina;
+    }
+
+    public void SetStamina(float stam)
+    {
+        currentStamina = stam;
+        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
+        if (staminaSlider != null) staminaSlider.value = currentStamina;
+    }
 }

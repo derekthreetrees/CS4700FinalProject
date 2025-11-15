@@ -70,7 +70,12 @@ public class HotbarController : MonoBehaviour
             if (slot.currentItem != null)
             {
                 Item item = slot.currentItem.GetComponent<Item>();
-                hotbarData.Add(new InventorySaveData { itemID = item.ID, slotIndex = slotTransform.GetSiblingIndex() });
+                hotbarData.Add(new InventorySaveData
+                {
+                    itemID = item.ID,
+                    slotIndex = slotTransform.GetSiblingIndex(),
+                    quantity = item.quantity
+                });
             }
         }
         return hotbarData;
@@ -98,6 +103,14 @@ public class HotbarController : MonoBehaviour
                 {
                     GameObject item = Instantiate(itemPrefab, slot.transform);
                     item.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+
+                    Item itemComponent = item.GetComponent<Item>();
+                    if(itemComponent != null && data.quantity > 1)
+                    {
+                        itemComponent.quantity = data.quantity;
+                        itemComponent.UpdateQuantityDisplay();
+                    }
+
                     slot.currentItem = item;
                 }
             }

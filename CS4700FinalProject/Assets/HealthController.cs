@@ -9,10 +9,10 @@ public class HealthController : MonoBehaviour
     public float currentHealth;
     public Slider healthBar;
 
-    void Start()
+    public void Start()
     {
-        currentHealth = maxHealth;
-
+        if(currentHealth < 1) currentHealth = maxHealth;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         if (healthBar != null)
         {
             healthBar.maxValue = maxHealth;
@@ -46,5 +46,10 @@ public class HealthController : MonoBehaviour
     {
         Debug.Log(gameObject.name + " died!");
         Destroy(gameObject);
+    }
+
+    public float GetHealth()
+    {
+        return currentHealth;
     }
 }

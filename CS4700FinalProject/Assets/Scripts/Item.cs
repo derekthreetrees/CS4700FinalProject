@@ -22,6 +22,7 @@ public class Item : MonoBehaviour
     private TMP_Text quantityText;
 
     public int healAmount;
+    public int stamRegen;
     public int damage;
     public float attackCooldown = 1f;
 
@@ -96,6 +97,9 @@ public class Item : MonoBehaviour
                 break;
             case ItemType.Weapon:
                 player.GetComponent<PlayerController>().EquipWeapon(this);
+                break;
+            case ItemType.Consumable:
+                player.GetComponent<PlayerMovement>().Regen(stamRegen);
                 break;
             default:
                 Debug.Log(Name + " has no use function.");
