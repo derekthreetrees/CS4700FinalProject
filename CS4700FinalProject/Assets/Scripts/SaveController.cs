@@ -36,6 +36,22 @@ public class SaveController : MonoBehaviour
         Debug.Log(saveLocation);
     }
 
+    public void SaveGameAndExit()
+    {
+        SaveData saveData = new SaveData
+        {
+            playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position,
+            inventorySaveData = inventoryController.GetInventoryItems(),
+            hotbarSaveData = hotbarController.GetHotbarItems(),
+            healthSaveData = healthController.GetHealth(),
+            staminaSaveData = playerMovement.GetStamina()
+        };
+        Debug.Log(saveData.healthSaveData);
+        File.WriteAllText(saveLocation, JsonUtility.ToJson(saveData));
+        Debug.Log(saveLocation);
+        Application.Quit();
+    }
+
     public void LoadGame()
     {
         if (File.Exists(saveLocation))
