@@ -99,7 +99,13 @@ public class Item : MonoBehaviour
                 player.GetComponent<PlayerController>().EquipWeapon(this);
                 break;
             case ItemType.Consumable:
-                player.GetComponent<PlayerMovement>().Regen(stamRegen);
+                if (quantity > 0)
+                {
+                    player.GetComponent<PlayerMovement>().Regen(stamRegen);
+                    quantity--;
+                    if (quantity <= 0) Destroy(gameObject);
+                    else UpdateQuantityDisplay();
+                }
                 break;
             default:
                 Debug.Log(Name + " has no use function.");
